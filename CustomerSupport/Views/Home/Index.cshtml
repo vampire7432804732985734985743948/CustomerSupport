@@ -1,8 +1,23 @@
-﻿@{
+﻿@model List<CustomerSupport.Models.ContactSupportRequestModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<h2>Support Requests</h2>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@foreach (var item in Model)
+{
+    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <a href="@Url.Action("Reply", "DataOperation", new { id = item.Id })">
+            <p><strong>ID:</strong> @item.Id</p>
+            <p><strong>Email:</strong> @item.UserEmailAddress</p>
+            <p><strong>Title:</strong> @item.RequestTitle</p>
+            <p><strong>Description:</strong> @item.RequestDescription</p>
+            <p><strong>Category:</strong> @item.Category</p>
+        </a>
+    </div>
+}
 </div>

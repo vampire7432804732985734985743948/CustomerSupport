@@ -9,5 +9,6 @@ namespace CustomerSupport.Models
         public string UserEmailAddress { get; set; } = string.Empty;
         public string RequestTitle { get; set; } = string.Empty;
         public string RequestDescription{ get; set; } = string.Empty;
+        public string Category{ get; set; } = string.Empty;
     }
 }

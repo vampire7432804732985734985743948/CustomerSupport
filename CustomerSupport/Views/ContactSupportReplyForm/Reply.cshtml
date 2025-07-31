@@ -1,0 +1,11 @@
+﻿@using CustomerSupport.Models;
+@model ContactSupportRequestModel;
+
+@{
+    ViewData["Title"] = $"Client request";
+}
+
+@if (Model != null)
+{
+   <p>@Model.Id</p>
+}
