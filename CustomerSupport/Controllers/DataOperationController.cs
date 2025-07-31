@@ -14,10 +14,18 @@ namespace CustomerSupport.Controllers
             _context = appDbContext;
         }
         [HttpGet]
-        public async Task<IActionResult> GetClientRequests()
+        public async Task<IActionResult> Index()
         {
             var cases = await _context.ContactSupportRequests.ToListAsync();
-            return Ok(cases);
+            return View(cases);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Reply(int id)
+        {
+            var caseItem = await _context.ContactSupportRequests.FindAsync(id);
+            if (caseItem == null) return NotFound();
+
+            return View("~/Views/ContactSupportReplyForm/Reply.cshtml", caseItem);
         }
     }
 }
