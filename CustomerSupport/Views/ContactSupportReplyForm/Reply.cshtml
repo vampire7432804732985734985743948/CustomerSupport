@@ -5,7 +5,16 @@
     ViewData["Title"] = $"Client request";
 }
 
-@if (Model != null)
-{
-   <p>@Model.Id</p>
-}
+<div class="case-details">
+    <p><strong>ID:</strong> @Model.Id</p>
+    <p><strong>Email:</strong> @Model.UserEmailAddress</p>
+    <p><strong>Title:</strong> @Model.RequestTitle</p>
+    <p><strong>Description:</strong> @Model.RequestDescription</p>
+    <p><strong>Category:</strong> @Model.Category</p>
+</div>
+
+<div>
+    <form asp-action="" asp-controller="Home">
+        <input asp-asp-for=""/>
+    </form>
+</div>
