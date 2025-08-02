@@ -1,4 +1,6 @@
 ﻿@model List<CustomerSupport.Models.ContactSupportRequestModel>
+@using CustomerSupport.Constants.FhilterData
+
 
 @{
     ViewData["Title"] = "Home Page";
@@ -12,9 +14,40 @@
         <tr>
             <th>ID</th>
             <th>Title</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Created</th>
+            <th>
+                Category
+                <select name="Category" class="form-control mt-2">
+                    <option value="@Category.ReportBug">@Category.ReportBug</option>
+                    <option value="@Category.PaymentIssue">@Category.PaymentIssue</option>
+                    <option value="@Category.TechnicalIssues">@Category.TechnicalIssues</option>
+                    <option value="@Category.FoodDatabaseIssues">@Category.FoodDatabaseIssues</option>
+                    <option value="@Category.Localization">@Category.Localization</option>
+                    <option value="@Category.Privacy">@Category.Privacy</option>
+                    <option value="@Category.Other">@Category.Other</option>
+                </select>
+            </th>
+            <th>
+                Request status
+                <select name="RequestStatus" class="form-control mt-2" >
+                    <option value="@RequestStatus.All">@RequestStatus.All</option>
+                    <option value="@RequestStatus.Open">@RequestStatus.Open</option>
+                    <option value="@RequestStatus.InProgress">@RequestStatus.InProgress</option>
+                    <option value="@RequestStatus.WaitingForUser">@RequestStatus.WaitingForUser</option>
+                    <option value="@RequestStatus.OnHold">@RequestStatus.OnHold</option>
+                    <option value="@RequestStatus.Resolved">@RequestStatus.Resolved</option>
+                    <option value="@RequestStatus.Closed">@RequestStatus.Closed</option>
+                    <option value="@RequestStatus.Reopened">@RequestStatus.Reopened</option>
+                    <option value="@RequestStatus.Canceled">@RequestStatus.Canceled</option>
+                </select>
+            </th>
+            <th>
+                Created
+                <select name="SubmittionDate" class="form-control mt-2">
+                    <option value="@SubmittionDate.Recent">@SubmittionDate.Recent</option>
+                    <option value="@SubmittionDate.Oldest">@SubmittionDate.Oldest</option>
+                    <option value="@SubmittionDate.TheMostPopular">@SubmittionDate.TheMostPopular</option>
+                </select>
+            </th>
             <th>Actions</th>
         </tr>
     </thead>
