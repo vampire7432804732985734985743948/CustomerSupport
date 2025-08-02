@@ -20,21 +20,39 @@ namespace CustomerSupport.Controllers
         public async Task<IActionResult> Index()
         {
             var cases = await _context.ContactSupportRequests.ToListAsync();
-            return View("~/Views/Home/Index.cshtml", cases);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Reply(int id)
-        {
-            var caseItem = await _context.ContactSupportRequests.FindAsync(id);
-            if (caseItem == null) return NotFound();
-
-            return View(caseItem);
+            return View(cases);
         }
         public IActionResult Privacy()
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Reply(int id)
+        {
+            var singleCase = await _context.ContactSupportRequests.FindAsync(id);
 
+            if (singleCase == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Views/ContactSupportReplyForm/Reply.cshtml", singleCase);
+        }
+
+        [HttpPost]
+        public IActionResult SendReply(ContactSupportReplyModel reply) 
+        {
+            if (reply == null) 
+            {
+                return RedirectToAction("Reply");
+            }
+
+            return View();
+        }
+        public IActionResult ArchiveRequestsCases()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
