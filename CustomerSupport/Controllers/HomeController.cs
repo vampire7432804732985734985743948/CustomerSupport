@@ -1,8 +1,12 @@
+using CustomerSupport.Constants.FhilterData;
 using CustomerSupport.DataBaseConnection;
 using CustomerSupport.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
+using System.Linq;
 
 namespace CustomerSupport.Controllers
 {
@@ -16,11 +20,39 @@ namespace CustomerSupport.Controllers
             _context = appDbContext;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string category, string requestStatus, string submittionData)
         {
-            var cases = await _context.ContactSupportRequests.ToListAsync();
-            return View(cases);
+            var query = _context.ContactSupportRequests.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(category) && category != Category.Any)
+            {
+                query = query.Where(x => x.Category == category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(submittionData) && submittionData != Category.Any)
+            {
+                query = submittionData switch
+                {
+                    SubmittionDate.Recent => query.OrderByDescending(r => r.CaseSubmitionTime),
+                    SubmittionDate.Oldest => query.OrderBy(r => r.CaseSubmitionTime),
+                    SubmittionDate.TheMostPopular => ApplyPopularitySort(query),
+                    _ => query.OrderByDescending(r => r.CaseSubmitionTime)
+                };
+            }
+             
+            if (!string.IsNullOrWhiteSpace(requestStatus) && requestStatus != RequestStatus.Any)
+            {
+                query = query.Where(x => x.RequestStatus == requestStatus);
+            }
+
+            var selectedCases = await query.ToListAsync();
+            return View(selectedCases);
+        }
+        private static IQueryable<ContactSupportRequestModel> ApplyPopularitySort(IQueryable<ContactSupportRequestModel> query)
+        {
+            return query.GroupBy(x => x.Category)
+                        .OrderByDescending(o => o.Count())
+                        .SelectMany(s => s);
         }
         public IActionResult Privacy()
         {

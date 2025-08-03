@@ -2,8 +2,8 @@
 {
     public class RequestStatus
     {
-        public const string All = "All";
-        public const string Open = "Open";
+        public const string Any = "All";
+        public const string Opened = "Opened";
         public const string InProgress = "InProgress";
         public const string WaitingForUser = "WaitingForUser";
         public const string OnHold = "OnHold";
