@@ -2,6 +2,7 @@
 {
     public class Category
     {
+        public const string Any = "Any";
         public const string ReportBug = "Report a bug";
         public const string PaymentIssue = "Payment issue";
         public const string TechnicalIssues = "Technical issues";
