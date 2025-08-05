@@ -20,7 +20,7 @@ namespace CustomerSupport.Controllers
             _context = appDbContext;
         }
 
-        public async Task<IActionResult> Index(string category, string requestStatus, string submittionData)
+        public async Task<IActionResult> Index(string category, string requestStatus, string submittionDate)
         {
             var query = _context.ContactSupportRequests.AsQueryable();
 
@@ -29,9 +29,9 @@ namespace CustomerSupport.Controllers
                 query = query.Where(x => x.Category == category);
             }
 
-            if (!string.IsNullOrWhiteSpace(submittionData) && submittionData != Category.Any)
+            if (!string.IsNullOrWhiteSpace(submittionDate) && submittionDate != Category.Any)
             {
-                query = submittionData switch
+                query = submittionDate switch
                 {
                     SubmittionDate.Recent => query.OrderByDescending(r => r.CaseSubmitionTime),
                     SubmittionDate.Oldest => query.OrderBy(r => r.CaseSubmitionTime),

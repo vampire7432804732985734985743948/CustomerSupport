@@ -3,9 +3,10 @@ using CustomerSupport.Constants;
 using CustomerSupport.Data.Json;
 using CustomerSupport.DataBaseConnection;
 using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(); 
 string importedData = new JsonDataReceiver().GetData();
 ConstantsCollector? collector = JsonSerializer.Deserialize<ConstantsCollector>(importedData);
 Console.WriteLine(collector.DBConnectionString);
